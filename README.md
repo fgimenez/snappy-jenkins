@@ -1,3 +1,4 @@
+[![Build Status][travis-image]][travis-url]
 # Snappy Jenkins CI
 
 This repo helps setting up the CI environment used for executing Snappy integration tests [1]. It contains Dockerfiles which define the required containers (Jenkins master and slaves and a Nginx proxy) and several shell scripts for bringing them to live both in a cloud provider (only OpenStack supported at the moment) and locally.
