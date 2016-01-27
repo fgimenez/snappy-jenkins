@@ -1,4 +1,4 @@
-FROM ubuntucore/jenkins-ubuntu
+FROM fgimenez/jenkins-ubuntu
 
 USER root
 
