@@ -24,7 +24,7 @@ create_snapshot(){
 }
 
 create_docker_machine(){
-    docker-machine rm -f $NAME_REMOTE_SEED
+    docker-machine rm -f $NAME_REMOTE
     docker-machine create --driver openstack \
                --openstack-flavor-name $FLAVOR \
                --openstack-image-name $IMAGE_NAME \
@@ -32,7 +32,7 @@ create_docker_machine(){
                --openstack-ssh-user ubuntu \
                --openstack-keypair-name $KEYPAIR_NAME \
                --openstack-private-key-file $PRIVATE_KEY_PATH \
-               $NAME_REMOTE_SEED
+               $NAME_REMOTE
 }
 
 create_security_group "$SECGROUP"
@@ -42,11 +42,11 @@ create_keypair "$PRIVATE_KEY_PATH" "$KEYPAIR_NAME"
 create_docker_machine
 IP=$(docker-machine ip "$NAME_REMOTE_SEED")
 ID=$(openstack server list | grep "$IP" | awk '{ print $2 }')
-trap "openstack server delete $ID" EXIT
+#trap "openstack server delete $ID" EXIT
 
 eval $(docker-machine env "$NAME_REMOTE_SEED")
 docker-compose -f ./config/compose/cluster.yml up -d
 
-if [ "$?" -eq 0 ]; then
-    create_snapshot "$IP" "$ID" "$DIST"
-fi
+#if [ "$?" -eq 0 ]; then
+#    create_snapshot "$IP" "$ID" "$DIST"
+#fi
